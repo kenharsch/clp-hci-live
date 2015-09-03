@@ -1,0 +1,70 @@
+<link href="assets/home.css" rel="stylesheet">
+<div class="row">
+  <div class="col-md-12">
+      <div class="row">
+      <div class="col-md-6">
+        <h3>Top Posts </h3>
+        <h5>Rated by TAs</h5>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nickname</th>
+              <th>Title</th>
+            </tr>
+          </thead>
+         <tbody>
+             <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.user_nickname %></td>
+        <td><%= post.title %></td>
+      </tr>
+      
+    <% end %>
+          
+          </tbody>
+        </table>
+
+        <h3>Gold Stars</h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nickname</th>
+              <th>Reason</th>
+              <th colspan="10">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-4">
+        <h3>Top Readers </h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nickname</th>
+            </tr>
+          </thead>
+          <tbody>
+             <% @users.each do |user| %>
+      <tr>
+        <td><%= user.nickname %></td>
+      </tr>
+      
+    <% end %>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+
+</div>
+</div>
+</div>

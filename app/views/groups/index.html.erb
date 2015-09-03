@@ -1,0 +1,113 @@
+<link href="assets/blog.css" rel="stylesheet">
+<body id="bloggy">
+  <% if current_user.admin? %>
+  <h1>Groups</h1>
+  <table class="table table-striped">
+    <thead>
+     <tr>
+      <th>Users</th>
+      <th>Assigned Group</th>
+      <th>Group ID</th>
+      <th>Membership ID</th>
+      <th>User ID</th>
+      <tr>
+
+        <% @groups.each do |group| %>
+        <tr><th bgcolor="#639CA9"><%= group.name %></th>
+          <th bgcolor="#639CA9"></th>
+          <th bgcolor="#639CA9"></th>
+          <th bgcolor="#639CA9"></th>
+          <th bgcolor="#639CA9"></th>
+        </tr>
+
+      </thead>
+      <body>
+        <% group.users.each do |user| %>
+        <tr>
+          <td><%= user.nickname %></td>
+          <td><%= user.group.name %></td>
+          <td><%= user.group.id %></td>
+          <td><%= user.membership.id %></td>
+          <td><%= user.id %></td>
+
+        </tr>
+        <% end %>
+      </body>
+      <% end %>
+  <% end %>
+
+      <% if !current_user.admin? %>
+
+      <h1>Class Blog </h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <% @posts.each do |post| %>
+          <tr>
+            <td><h3><%= post.title %></h3></td>
+            <td></td>
+
+            <td><b><% if !RealName.where(user_id: post.user.id).exists? %>
+              <%=  post.user.nickname %>
+              <% elsif RealName.where(user_id: post.user.id).first.created_at < post.created_at %>
+              <%= post.user.name %>
+              <% else %>
+              <%= post.user.nickname %>
+              <% end %></b></td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div style="height: 200px; overflow: auto; background-color: #CBD4CF; outline: 2px solid #546593; padding: 5px", class="boxed", colspan="3">
+                  <%=raw post.content %>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <% post.comments.each do |comment| %>
+              <% unless comment.user.nil? %>
+              <td>
+                <div style="height: 50px; width: 900px;  overflow: auto; background-color: #CBD4CF; outline: 2px solid #546593; padding: 5px", class="boxed", colspan="3">
+                  <%= comment.body %>
+                </div>
+              </td>
+              <td></td>
+
+              <td>
+
+                <% if !RealName.where(user_id: comment.user.id).exists? %>
+                <%=  comment.user.nickname %>
+                <% elsif RealName.where(user_id: comment.user.id).first.created_at < comment.created_at %>
+                <%= comment.user.name %>
+                <% else %>
+                <%= comment.user.nickname %>
+                <% end %></td>
+                <% end %>
+              </tr>
+              <% end %>
+          
+              <tr>
+                <td>
+                  <strong>To view full screen, or add a comment:</strong>
+                  <td><%= button_to 'Go', post_path(post), :method => :get %></td>
+                  <% end %>
+                </tbody>
+              </table>
+
+
+              <% end %>
+
+
+
+
+
+
+

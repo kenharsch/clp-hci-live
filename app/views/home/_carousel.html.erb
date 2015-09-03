@@ -1,0 +1,65 @@
+<script>
+  $(document).ready(function(){
+    $('.carousel').carousel({
+      interval: 10000
+    });
+  });
+</script>
+
+<div id="carousel" class="carousel slide" data-ride="carousel" >
+  <!-- Indicators -->
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <%= image_tag "sp2.png" %>
+      <div class="carousel-caption">
+        <h2><b>Welcome to COSI 125a</b></h2>
+        <h3><b>Human-Computer Interaction</b></h3>
+      </div>
+    </div>
+
+    <div class="item">
+      <%= image_tag "new.png" %>
+      <div class="carousel-caption">
+        <h1 style="color:white"><b>New Post!</b></h1>
+        <% unless @newest.nil? %>
+        <h3 ><b><a style="color:white" href= <%= @newest_link %>><%= @newest.title %></b></h3>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="item">
+      <%= image_tag "paper.jpg" %>
+      <div class="carousel-caption">
+        <h2 style="color:black"><b>Current Assignment</b></h2>
+        <% unless @assignment.nil? %>
+        <h3 style="color:blue"><a href= <%= @assignment_link %>><%= @assignment.title %></a></h3>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="item">
+      <%= image_tag "glasses.png" %>
+      <div class="carousel-caption">
+        <h2><b>Trending</b></h2>
+        <% unless @trending.nil? %>
+        <h3><a style="color: #767E3E" href= <%= @trending_link %>><%= @trending.title %></a></h3>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+ 
+
+<!-- Controls -->
+  <a class="left carousel-control" href="#carousel" role="button" data-slide="prev" style = "opacity:0.33;">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel" role="button" data-slide="next" style = "opacity:0.33;">
+    <span class="icon-next"></span>
+  </a>
+
+
+</div>

@@ -1,0 +1,59 @@
+<h4>Assignment</h4>
+<p>
+  <strong>Title:</strong>
+  <%= @assignment.title %>
+</p>
+<p>
+  <strong>Due:</strong>
+  <%= @assignment.due.strftime("%B %d at %I:%M %p") %></li>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  
+    <div>
+  <%= raw @assignment.description %>
+  </div>
+</p>
+
+
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.cktext_area :content, :ckeditor => {:language => 'en'}  %>
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :user_id, value: current_user.id%>
+  </div>
+
+  <% if current_user.admin %>
+    
+      <% end %>
+  <br>
+  
+  <div class="field">
+    <%= f.collection_select :assignment_id, Assignment.all, :id, :title, :prompt => "Choose Assignment" %>
+  </div>   
+<br>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

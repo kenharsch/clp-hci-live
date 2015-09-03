@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  problemID: 1
+  content: MyText
+  savedOn: 2014-12-02 12:59:52
+  toGroupOn: 2014-12-02 12:59:52
+
+two:
+  title: MyString
+  problemID: 1
+  content: MyText
+  savedOn: 2014-12-02 12:59:52
+  toGroupOn: 2014-12-02 12:59:52

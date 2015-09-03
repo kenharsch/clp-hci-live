@@ -1,0 +1,86 @@
+<% if ! current_user.admin? %>
+<p id="notice"><%= notice %></p>
+
+<br>
+<h4>Evaluation Saved Successfully</h4>
+<br>
+
+<%= link_to 'Edit Evaluation', edit_evaluation_path(@evaluation) %> |
+<%= link_to 'Back to List', evaluations_path %>
+<% end %>
+
+
+<% if current_user.admin? %>
+	<p>
+	    <strong>Evaluation By:</strong>
+	    <%= @evaluation.user.nickname %>
+  	</p>
+	<p>
+	    <strong>Post Title:</strong>
+	    <%= @evaluation.post.title %>
+  	</p>
+  	<p>
+	    <strong>Post Author:</strong>
+	    <% if @evaluation.post.user.nickname = "Ken" %>
+	    <%=  @evaluation.post.title %>
+	    <% else %>
+	    <%= @evaluation.post.user.nickname %>
+	    <% end %>
+  	</p>
+   	<p>
+	    <strong>TA Rank:</strong>
+	    <%= @evaluation.post.ta_rank %>
+	</p>
+	<p>
+	    <strong>Rank:</strong>
+	    <%= @evaluation.user_rank %>
+	</p>
+	
+	<p>
+	    <strong>This Rank's Delta Score:</strong>
+	    <% if @evaluation.post.ta_rank.nil? %>
+	    <h5>Not Available</h5>
+	    <% elsif @evaluation.user_rank.nil? %>
+      <h5>Not Available</h5>
+      <% else %>
+	    <%= (@evaluation.post.ta_rank - @evaluation.user_rank).abs %>
+	    <% end %>
+	</p>
+  <br>
+<!-- Need to fix the delta - put logic in controller -->
+<h4><%= link_to 'Show Post', @evaluation.post %></h4>
+<br>
+  <h4>Comments</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Rating #</th>
+      <th>Rating</th>
+      <th>Comment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        <td>Issue</td>
+        <td><%= @evaluation.rating_1 %></td>
+        <td><%= @evaluation.comment_1 %></td>
+      </tr>
+      <tr>
+        <td>Evaluation</td>
+        <td><%= @evaluation.rating_2 %></td>
+        <td><%= @evaluation.comment_2 %></td>
+      </tr>
+      <tr>
+        <td>Opinion</td>
+        <td><%= @evaluation.rating_3 %></td>
+        <td><%= @evaluation.comment_3 %></td>
+      </tr>
+  
+  </tbody>
+
+</table>
+
+<% end %>

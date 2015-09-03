@@ -1,0 +1,8 @@
+ body#bloggy{
+	background-color: #C4D4CF !important;
+  background-image: url("thompson88.png");
+  background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom right;
+  color: #767E3E !important;
+}

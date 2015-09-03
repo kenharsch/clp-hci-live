@@ -1,0 +1,95 @@
+<link href="assets/blog.css" rel="stylesheet">
+<body id="bloggy">
+
+  <p>
+    <h2><%= @post.title %></h2>
+  </p>
+
+  <p>
+    <%= @post.assignment.title %>
+  </p>
+  <p><b>By:</>&nbsp&nbsp</b>
+    <% if !RealName.where(user_id: @user.id).exists? %>
+    <%=  @post.user.nickname %>
+    <% elsif RealName.where(user_id: @user.id).first.created_at < @post.created_at %>
+     <%= @post.user.name %>
+    <% else %>
+    <%= @post.user.nickname %>
+     <% end %>
+  </p>
+  <br>
+  <h4>Likes: &nbsp<%= @post.upvotes %></h4>
+  <% unless @post.user.id == current_user.id %>
+  <div id="likes" align="right">
+    <%if PostUpvote.where(post_id: @post.id, user_id: current_user.id).exists?%>
+    <div> You like this post.</div>
+    <%else%>
+    <%=form_for(PostUpvote.new) do |x|%>
+    <%=x.hidden_field :user_id, value: current_user.id%>
+    <%=x.hidden_field :post_id, value: @post.id%>
+    <%=x.submit "Like"%>
+    <%end%>
+    <%end%>
+  </div>
+  <% end %>
+
+  <p>
+    <div style="width: 1068px; height: auto; overflow: auto; background-color: #C5D4CF; outline: 2px solid #546593; padding: 5px", class="boxed">
+      <%= raw @post.content %>
+    </div>
+  </p>
+
+  <h4>Comments:</h4>
+  <% @post.comments.each do |comment| %>
+  <p>
+    <div style="width: 900px; height: 50px; overflow: auto; background-color: #C5D4CF; font-size: 12px; outline: 2px solid #546593; padding: 5px", class="boxed">
+      <%= raw comment.body %>
+    </div>
+  </p>
+
+  <p>
+    <strong>By:</strong>
+    <% if !RealName.where(user_id: comment.user.id).exists? %>
+    <%=  comment.user.nickname %>
+    <% elsif RealName.where(user_id: comment.user.id).first.created_at < comment.created_at %>
+     <%= comment.user.name %>
+    <% else %>
+    <%= comment.user.nickname %>
+     <% end %>
+
+  <br>
+  <% end %>
+  <br>
+
+  <strong>Add a comment:</strong>
+  <%= form_for([@post, @post.comments.build]) do |f| %>
+  <p>
+    <%= f.hidden_field :commenter, :value => current_user.nickname %> 
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.text_area :body, cols:100 %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+  <% end %>
+
+
+
+  <% if current_user == @post.user %>
+  <%= link_to 'Back', posts_path %> |
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <% end %>
+  <% unless current_user.admin? %>
+  <%= link_to 'Back to Class Blog', user_groups_path(current_user.group) %>
+  <% end %>
+  <br>
+  <br>
+  <br>
+</body>
+
+<script>
+  $("#new_comment_upvote").bind("ajax:complete", function(event, xhr, status) {
+    window.location.reload();
+  });
+
+</script>

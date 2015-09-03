@@ -1,0 +1,57 @@
+
+<body>
+  <h2> COSI 133b Admin Page </h2>
+
+<% if current_user.admin? %>
+
+
+
+
+
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</style>
+<h3>User Statistics</h3>
+<table class="table table-striped" 
+  <thead>
+    <tr>
+     <tr>
+      <th>Name</th>
+      <th>Nickname</th>
+      <th>Sign-ins</th>
+      <th>Comments</th>
+      <th>Post Reads</th>
+      <th colspan="3"></th>
+    </tr>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr data-item-id=<%= "#{user.id}" %> class="item">
+        <td><%= user.name %></td>
+        <td><%= user.nickname %></td>
+        <td><%= user.sign_in_count %></td>
+        <td><%= user.comments.count %></td>
+        <td><%=  %></td>
+        <td><%= link_to 'Show User', user_path(user) %></td>
+      </tr>
+    
+    <% end %>
+    
+  </tbody>
+  
+</table>
+
+<% else %>
+<h2>You cannot access this page.</h2>
+
+<% end %>
+
+
+
+

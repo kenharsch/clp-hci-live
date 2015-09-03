@@ -1,0 +1,27 @@
+<% unless @notifications.nil? %>
+<% @notifications.each do |notification|%>
+	<%= div_for notification do%>
+		<tr><td>
+		<%if notification.read?%>
+			<a class='notify_link' id="<%=notification.id%>" href= <%= notification.link %>><%= notification.message %></a>
+		<%else%>
+			<b><a class='notify_link' id="<%=notification.id%>" href= <%= notification.link %>><%= notification.message %></a></b>
+			<%=form_for([notification], remote: true, html: {id:"form_"+ notification.id.to_s}) do |f|%>
+				<%=f.hidden_field :read, value: true%>
+			<%end%>
+		<%end%>
+		<p>Posted <%= time_ago_in_words(notification.created_at) %> ago</p>
+		<%if current_user.admin?%>
+			<%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<%end%>
+	<%end%>
+</tr></td>
+
+<script>
+$('#<%=notification.id%>').click(function() {
+    $('#form_<%=notification.id%>').submit();
+});
+</script>
+
+<%end%>
+<%end%>

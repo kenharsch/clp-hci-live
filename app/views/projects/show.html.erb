@@ -1,0 +1,40 @@
+<link href="assets/blog.css" rel="stylesheet">
+<body id="bloggy">
+
+<p>
+  <strong>Title:</strong>
+  <%= @project.title %>
+</p>
+<p>
+  <strong>Authors:</strong>
+  <% @project.users.each do |user| %>
+  <%= user.name %>&nbsp&nbsp
+  <% end %>
+</p>
+
+<p>
+  <strong>Report:</strong>
+  <div style="width: 800px; height: 400px; overflow: auto; background-color: #FFFFFF; outline: 2px solid #A05E1D; padding: 5px", class="boxed">
+  <%= raw @project.content %>
+  </div>
+</p>
+
+<% @project.attachments.each do |att| %>
+
+<div class="media">
+  <div class="media-left">
+    <%= link_to image_tag(att.record.url(:thumb), class: 'media-object'), att.record.url, target: '_blank' %>
+  </div>
+</div>
+<div class="media-body">
+    <h4 class="media-heading"><%= att.record_file_name %></h4>
+  </div>
+<% end %>
+ 
+ 
+<%= link_to 'Back', projects_path %> 
+
+<br>
+<br>
+<br>
+</body>

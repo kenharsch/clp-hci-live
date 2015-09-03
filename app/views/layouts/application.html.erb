@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html> 
+<head>
+  <title>COSI 125a</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tags %>
+  <%= if current_user.nil?
+    @first_entry = ''
+    @second_entry = ''
+    @third_entry = ''
+  elsif current_user.admin?
+    @first_entry = 'Overview'
+    @first_link = '/admin_pg/index'
+    @second_entry = 'Users'
+    @second_link = "/users"
+    @third_entry = 'Assignments'
+    @third_link = "/assignments"
+    @fourth_entry = 'Groups'
+    @fourth_link = "/groups"
+    @fifth_entry = 'Posts'
+    @fifth_link = "/posts"
+    @sixth_entry = 'Projects'
+    @sixth_link = "/projects"
+    @seventh_entry = 'Home'
+    @seventh_link = '/home/index'
+  else
+    @first_entry = 'Home'
+    @first_link  = '/home/index'
+    @second_entry = 'My Blog'
+    @second_link =  '/posts'
+    @third_entry = 'Class Blog'
+      @third_link = '/groups'
+
+    @fourth_entry = 'Assignments'
+    @fourth_link = "/assignments"
+    @fifth_entry = 'My Project'
+    @fifth_link = "/projects"
+    if !RealName.where(user_id: current_user.id).exists?
+      @sixth_entry = 'Name Switch'
+      @sixth_link = "/real_names/new"
+    end
+    
+    end%>
+    <link href="assets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/dashboard.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  </head>
+  <body class='<% controller.controller_name %>'>
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" >CS125 - Human Computer Interaction</a>   
+      </div>
+      <div>
+        <p class="navbar-nickname"> Logged in as: <%= 
+        if current_user.nil?
+          "Not Logged In"
+        else
+          current_user.name 
+          end %>
+        </p> 
+      </div>
+
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-left">
+       <li><a href="<%= @first_link %>"><%= @first_entry %></a></li>
+       <li><a href="<%= @second_link %>"><%= @second_entry %></span></a></li>
+       <li><a href="<%= @third_link %>"><%= @third_entry %></a></li>
+       <li><a href="<%= @fourth_link %>"><%= @fourth_entry %></a></li>
+       <li><a href="<%= @fifth_link %>"><%= @fifth_entry %></a></li>
+       <li><a href="<%= @sixth_link %>"><%= @sixth_entry %></a></li>
+       <li><a href="<%= @seventh_link %>"><%= @seventh_entry %></a></li>
+     </ul>
+     <ul class="nav navbar-nav navbar-right" style="margin-right:10px">
+      <li><a href="/users/edit">Profile</a></li>
+      <li><a href="#">Help</a></li>
+      <li><a <%=link_to 'Sign out', destroy_user_session_path, :method => :delete %></a></li>
+    </ul>
+  </div>
+</div>
+</nav>
+
+<% if controller_name == "home" %>
+<%= render 'carousel' %>
+<% end %>
+
+<div class="row" style="margin-top:70px; margin-right:25px; margin-left:25px;">
+  <div class="col-md-12">
+    <%= yield %>
+  </div>
+</div>
+
+
+
+<footer>
+</footer>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</body>
+<br>
+<br>
+<br>
+
+</html>

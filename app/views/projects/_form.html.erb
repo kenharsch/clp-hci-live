@@ -1,0 +1,77 @@
+<%= form_for(@project) do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% @project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.cktext_area :content, :ckeditor => {:language => 'en'}  %>
+  </div>
+
+<% if current_user.admin? %>
+<div>
+
+<% User.order(:name).each do |user| %>
+  <%= check_box_tag :user_ids,
+                     user.id,
+                     @project.users.include?(user),
+                     name: 'project[user_ids][]' %>
+  <%= user.name %>
+  <br>
+<% end %>
+</div>
+<% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
+
+<div>
+
+ <%= link_to "History", { :controller => :projects, :action => :history, :id => @project.id} %>
+
+
+
+
+<h4>Attachments</h4>
+
+<div style="width: 300px; height: 200px; overflow: auto; background-color: #FFFFFF; font-size: 12px; outline: 2px solid #A05E1D; padding: 5px", class="boxed">
+<% @project.attachments.each do |att| %>
+
+<div class="media">
+  <div class="media-left">
+    <%= link_to image_tag(att.record.url(:thumb), class: 'media-object'), att.record.url, target: '_blank' %>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading"><%= att.record_file_name %></h4>
+ <%= link_to 'Remove', attachment_path(att), method: :delete, data: {confirm: 'Are you sure?'} %></div>
+</div>
+-----------------------------------------------------
+<% end %>
+</div>
+<br>
+<h4>Add Attachment</h4>
+<%= form_for([Attachment.new], remote: true) do |f| %>
+<div class="form-group">
+  <%= f.label :record %>
+  <%= f.file_field :record, class: 'form-control' %>
+  <%= f.hidden_field :project_id, value: @project.id %> 
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+</div>
+<%= f.submit 'Upload'%>
+
+<% end %>

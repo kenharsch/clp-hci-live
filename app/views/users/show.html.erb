@@ -1,0 +1,73 @@
+<p id="notice"><%= notice %></p>
+
+<% if current_user.admin? %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Admin:</strong>
+  <%= @user.admin? %>
+</p>
+
+<p>
+  <strong>Sign In Count:</strong>
+  <%= @user.sign_in_count %>
+</p>
+
+<% end %>
+<p>
+  <strong>Nickname:</strong>
+  <%= @user.nickname %>
+</p>
+
+<% if !@user.admin? %>
+<p>
+  <strong>Group:</strong>
+      
+        <td><%= @user.group.name %></td>
+      </tr>
+</p>
+<% end %>
+
+
+<h3>Blog Posts</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Created</th>
+      <th>Due</th>
+      <th>Grade</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.user.nickname %></td>
+        <td><%= post.created_at.strftime("%B %d at %I:%M %p") %></td>
+        <td><%= post.assignment.due.strftime("%B %d at %I:%M %p") %></td>
+        <td><%= post.grade %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to 'Grade',  edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+<%= link_to 'Back', users_path %>
+
+

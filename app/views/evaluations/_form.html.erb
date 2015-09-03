@@ -1,0 +1,99 @@
+
+
+
+<%= form_for(@evaluation) do |f| %>
+  <% if @evaluation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+
+      <ul>
+      <% @evaluation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <section>
+  <h4> Instructions: </h4 >
+  
+Rate the post on a scale of 0 to 3 for each category using the radio buttons.  In the comment section, give a brief explanation of your reasoning for the rating.  The number rankings are as follows: <br>
+3 - Excellent <br>
+2 - Above Average <br>
+1 - Average <br>
+0 - Poor <br>
+
+</section>
+  <br>
+  <h4>Post By: <%= @evaluation.post.user.nickname %></h4>
+  
+   <div style="width: 800px; height: 400px; overflow: auto; background-color: #FFFFFF; outline: 2px solid #A05E1D; padding: 5px", class="boxed">
+  <%=raw @evaluation.post.content %>
+  </div>
+
+  <% if @evaluation.post.problemID == 3 || @evaluation.post.problemID == 4%>
+<p>
+  <strong>Discussion:</strong>
+  <div style="width: 800px; height: 400px; overflow: auto; background-color: #FFFFFF; outline: 2px solid #A05E1D; padding: 5px",class="boxed">
+  <%=raw @evaluation.post.discussion %>
+  </div>
+</p>
+<% end %>
+ 
+
+  <br>
+<h4>Issue</h4>
+<h6>How interesting was the issue that the student chose to editorialize about?
+Was the quote appropriate?</h6>
+<h5>Rating:</h5>
+ <%= f.radio_button :rating_1, '3' %>
+ <%= label :rating_1_0, '3' %>
+ <%= f.radio_button :rating_1, '2' %>
+ <%= label :rating_1_0, '2' %>
+ <%= f.radio_button :rating_1, '1' %>
+ <%= label :rating_1_0, '1' %>
+ <%= f.radio_button :rating_1, '0' %>
+ <%= label :rating_1_0, '0' %>
+ <h5>Comment:</h5>
+  <%= f.hidden_field :commenter, :value => current_user.nickname %> 
+  <%= f.text_area :comment_1, cols:100 %>
+  <br>
+  <br>
+
+<h4>Explanation</h4>
+<h6>Did the post explain the issue clearly?</h6>
+<h5>Rating:</h5>
+ <%= f.radio_button :rating_2, '3' %>
+ <%= label :rating_2_0, '3' %>
+ <%= f.radio_button :rating_2, '2' %>
+ <%= label :rating_2_0, '2' %>
+ <%= f.radio_button :rating_2, '1' %>
+ <%= label :rating_2_0, '1' %>
+ <%= f.radio_button :rating_2, '0' %>
+ <%= label :rating_2_0, '0' %>
+  <h5>Comment:</h5>
+  <%= f.text_area :comment_2, cols:100 %>
+  <br>
+  <br>
+
+<h4>Opinion</h4>
+<h6>Did the post provide a well-reasoned and substantial opinion?</h6>
+<h5>Rating:</h5>
+ <%= f.radio_button :rating_3, '3' %>
+ <%= label :rating_3_0, '3' %>
+ <%= f.radio_button :rating_3, '2' %>
+ <%= label :rating_3_0, '2' %>
+ <%= f.radio_button :rating_3, '1' %>
+ <%= label :rating_3_0, '1' %>
+ <%= f.radio_button :rating_3, '0' %>
+ <%= label :rating_3_0, '0' %>
+  <h5>Comment:</h5>
+  <%= f.text_area :comment_3, cols:100 %>
+  <br>
+  <br>
+  <% if !current_user.admin? %>
+  <div class="actions">
+    <%= f.submit 'Save Evaluation'%>
+  </div>
+  <% end %>
+<% end %>
+<br>

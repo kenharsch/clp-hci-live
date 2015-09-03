@@ -1,0 +1,30 @@
+
+
+<p>
+  <strong>Title:</strong>
+  <%= @assignment.title %>
+</p>
+<p>
+  <strong>Due:</strong>
+  <%= @assignment.due.strftime("%B %d at %I:%M %p") %></li>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <div style="width: 1068px; height: 200px; overflow: auto; background-color: #CACEB0; outline: 2px solid #A05E1D; padding: 5px", class="boxed">
+  <%= raw @assignment.description %>
+  </div>
+</p>
+<% if current_user.admin? %>
+<%= link_to 'Edit', edit_assignment_path(@assignment) %> | 
+
+<% else %>
+
+
+<%= link_to 'Back', assignments_path %>
+<% if @post.nil? %>
+<%= button_to 'Begin Assignment', new_post_path, method: :get %>
+<% else %>
+<%= button_to 'Go to Your Post', edit_post_path(@post), method: :get %>
+<% end %>
+<% end %>

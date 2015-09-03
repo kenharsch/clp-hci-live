@@ -1,0 +1,49 @@
+<link href="assets/blog.css" rel="stylesheet">
+<body id="bloggy"></body>
+
+<br><br>
+<h4>My Blog Posts</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Due</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= if current_user.admin?
+      @link_name = 'Grade'
+    else
+       @link_name = 'Edit'
+      end %>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <% if post.user.nil? %>
+             <td> None </td>
+           <% else %>
+           <td><% if !RealName.where(user_id: post.user.id).exists? %>
+           <%=  post.user.nickname %>
+           <% elsif RealName.where(user_id: post.user.id).first.created_at < post.created_at %>
+           <%= post.user.name %>
+           <% else %>
+           <%= post.user.nickname %>
+           <% end %></td>
+      <% end %>
+        <td><%= post.assignment.due.strftime("%B %d at %I:%M %p") %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to @link_name, edit_post_path(post) %></td>
+      </tr>
+      
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= unless current_user.admin?
+  link_to 'New Post', new_post_path 
+  end%>

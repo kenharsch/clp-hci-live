@@ -1,0 +1,73 @@
+<body>
+ 
+ <h3>Notifications</h3>
+<div><div style="float: left; width: 45%; height: 500px; overflow: scroll">
+<table class="table table-bordered"> <%#table style (with borders around all cells); bordered, striped, hover all possible%>
+  
+  <thead> <%#table header%>
+
+   
+    <% if current_user.admin? %>
+    <tr>
+      <td>
+        <div id="notification_form">
+          <%=render 'notifications/notification_form'%>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </thead>
+  <tbody>
+    <div id="notification">
+      <%= render 'notifications/notification' %>
+    </div>
+  </tbody>
+
+</table>
+</div>
+
+<div><div style="float: right; width: 45%; height: 500px; overflow: scroll">
+<table class="table table-bordered"> <%#table style (with borders around all cells); bordered, striped, hover all possible%>
+  
+  <thead> <%#table header%>
+    <tr>
+      <th>Gold Stars</th> 
+    </tr>
+  </thead>
+
+  <tbody>
+    <% unless @gold_star_posts.nil? %> 
+    <% @gold_star_posts.each do |post| %>
+    <tr>
+      <td>
+        <h4><a href= <%= '/'+'posts/'+ post.id.to_s %>><%= post.title %></a></h4><br>
+         <% if post.user.real_name.nil?
+                    name = post.user.nickname
+                  elsif post.user.real_name.created_at < post.created_at
+                    name = post.user.name
+                  else
+                    name = post.user.nickname
+                end %>
+        <p>By: <%= name %></p>
+      </td>
+    </tr>
+    <% end %>
+    <%end%>
+  </tbody>
+
+</table>
+</div>
+
+<br>
+<br>
+ <div class="row">
+    <div class="col-md-12">
+      <div style="margin-left:5%">
+        <br>
+        <br>
+   <p><b>If you have any questions about or issues with this website, email Ken Harsch at <a href="mailto:kharsch@brandeis.edu"><FONT color=#8AA3D4>kharsch@brandeis.edu</FONT></a> or stop by my office at Volen 111. </b></p>
+   <br>
+ </div>
+</div>
+</div>
+</body>

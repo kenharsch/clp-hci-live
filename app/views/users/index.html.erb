@@ -1,0 +1,58 @@
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div style="margin-left:0%">
+<h1>Users </h1>
+
+
+<% if current_user.admin? %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nickname</th>
+      <th>Group</th>
+      <% if current_user.id == 1 || 2 %>
+      <th>Name</th>
+      <th>Email</th>
+      <%end%>
+   
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td class="list_description"><%= user.nickname %></td>
+        <%if user.group.nil? %>
+         <td class="list_description">ADMIN</td>
+         <% end %>
+        <% if !user.group.nil? %>
+        <td class="list_description"><%= user.group.name %></td>
+        <% end %>
+        <% if current_user.id == 1 || 2 %>
+        <td class="list_description"><%= user.name %></td>
+         <td class="list_description"><%= user.email %></td>
+        <%end%>
+       
+       
+       
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<% end %>
+
+
+<% if !current_user.admin? %>
+<h2> You do not have access to this page </h2>
+<br>
+
+<%= link_to 'Back', "/home/index" %>
+<% end %>

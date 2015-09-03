@@ -1,0 +1,14 @@
+<h1>Project Version History</h1>
+<p>Most recent version is at top with previous versions listed in descending order.</p>
+
+<% unless @project.versions.nil? %> 
+<p>
+
+	<% @version = @project.previous_version %>
+<div style="width: 1068px; height: 200px; overflow: auto; background-color: #FFFFFF; outline: 2px solid #A05E1D; padding: 5px", class="boxed"><%= raw(@project.previous_version.content) %></div>
+</p>
+
+  <br>
+<% end %>
+<%= button_to 'Edit', edit_project_path(@project), :method => :get %>
+
