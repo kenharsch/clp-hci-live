@@ -7,5 +7,8 @@ class Post < ActiveRecord::Base
 
 	validates :assignment_id, presence: { :message => "You must choose an assignment tag."}
 	
+	def comment_count
+		self.comments.count
+	end
 
 end
