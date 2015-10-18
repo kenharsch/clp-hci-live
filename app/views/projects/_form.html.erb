@@ -11,14 +11,15 @@
     </div>
   <% end %>
   <div class="field">
-    <%= f.label :title %><br>
+    <%= f.label :title, 'Team Name:' %>
     <%= f.text_field :title %>
   </div>
 
   <div class="field">
-    <%= f.label :content %><br />
+    <%= f.label :content, 'Report:' %><br />
     <%= f.cktext_area :content, :ckeditor => {:language => 'en'}  %>
   </div>
+
 
 <% if current_user.admin? %>
 <div>
@@ -35,16 +36,12 @@
 <% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= link_to "View History", { :controller => :projects, :action => :history, :id => @project.id}, class: 'submit' %>
   </div>
 
 <% end %>
 
 <div>
-
- <%= link_to "History", { :controller => :projects, :action => :history, :id => @project.id} %>
-
-
 
 
 <h4>Attachments</h4>

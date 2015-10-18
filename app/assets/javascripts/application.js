@@ -14,7 +14,7 @@
 //= require ahoy
 //= require jquery_ujs
 //= require jquery-ui
-//= require turbolinks
+
 //= require jquery.turbolinks
 //= require tinymce-jquery
 //= require bootstrap
