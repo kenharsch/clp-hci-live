@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   end
 
   def history
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:id]) 
   end
 
   # GET /projects/new
