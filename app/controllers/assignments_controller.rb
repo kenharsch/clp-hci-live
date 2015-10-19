@@ -4,7 +4,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments
   # GET /assignments.json
   def index
-    @assignments = Assignment.all
+    @assignments = Assignment.all.order(due: :asc)
   end
 
   # GET /assignments/1
