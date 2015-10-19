@@ -10,7 +10,7 @@
       </p>
       <p>
         <strong>Content:</strong>
-        <%= diff(@version.reify.content, @project.content) %>
+        <%= diff(strip_tags(@version.reify.content), strip_tags(@project.content)) %>
       </p>
     </div>
     <p>
@@ -19,6 +19,6 @@
   </div>
 </div>
 <div class='fr'>
-  <%= link_to 'Back', edit_project_path(@project), class: 'btn btn-default' %>
+  <%= link_to "Back to History", { :controller => :projects, :action => :history, :id => @project.id}, class: 'btn btn-default' %>
   <%= link_to 'Rollback', rollback_project_version_path(@project, @version), class: 'btn btn-default', method: 'PATCH'%>
 </div>
