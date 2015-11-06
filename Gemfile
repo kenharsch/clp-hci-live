@@ -16,6 +16,8 @@ gem 'paperclip'
 
 gem 'paper_trail', '~> 4.0.0'
 
+gem 'diffy'
+
 gem 'ranked-model'
 #Devise user authentication
 gem 'devise'

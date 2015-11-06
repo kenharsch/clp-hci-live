@@ -22,6 +22,7 @@ table, th, td {
      <tr>
       <th>Name</th>
       <th>Nickname</th>
+      <th>Email</th>
       <th>Sign-ins</th>
       <th>Comments</th>
       <th>Post Reads</th>
@@ -35,6 +36,7 @@ table, th, td {
       <tr data-item-id=<%= "#{user.id}" %> class="item">
         <td><%= user.name %></td>
         <td><%= user.nickname %></td>
+        <td><%= user.email %></td>
         <td><%= user.sign_in_count %></td>
         <td><%= user.comments.count %></td>
         <td><%=  %></td>

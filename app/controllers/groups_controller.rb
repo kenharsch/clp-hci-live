@@ -15,8 +15,10 @@ class GroupsController < ApplicationController
         user.posts.each do |post|
         @posts << post
       end
-    end
     @posts.sort! { |a,b| b.updated_at <=> a.updated_at }
+    @posts.sort_by {|x| x[:user_name].downcase}
+    end
+    
     end
   end
 
